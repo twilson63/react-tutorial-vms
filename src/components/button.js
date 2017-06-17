@@ -5,10 +5,10 @@ const cls = compose(join(' '), map(trim), split('\n'))
 
 // f6 link dim br2 ph3 pv2 mb2 dib white bg-purple
 const styles = cls(`
-  f5 
-  backgroundcolor-purple 
-  white 
-  borderradius-2 
+  f5
+  backgroundcolor-purple
+  white
+  borderradius-2
   paddinghorizontal-small
   paddingvertical-xsmall
   bordercolor-purple
@@ -17,7 +17,7 @@ const styles = cls(`
 const Button = props => {
   return (
     <div className="float-right">
-    <button className={styles}>{props.children}</button>
+      <button className={styles}>{props.children}</button>
     </div>
   )
 }

@@ -32,7 +32,7 @@ This tutorial is for someone just starting with React, so you will learn some ba
 
 ---
 
-## Why React is so explicit verbose
+## Why React is so explicit and verbose
 
 To provide a consistent and predictable way to build user interface applications. It is more verbose than other tools, but easier to test
 and easier to maintain.
@@ -119,7 +119,7 @@ import ReactDOM from 'react-dom'
 
 // render h1 element on root div
 ReactDOM.render(
-  <h1>Hello from React</h1>, 
+  <h1>Hello from React</h1>,
   document.getElementById('root')
 )
 ```
@@ -151,7 +151,7 @@ What is a React Component?
 
 ## What is a React Component?
 
-A React component is a JavaScript class that 
+A React component is a JavaScript class that
 contains a render method that returns a component
 
 ## A React Stateful Component
@@ -178,7 +178,7 @@ export default App
 
 ## What is a React Component?
 
-A React Component is a function that returns 
+A React Component is a function that returns
 a component
 
 ## A Stateless Component
@@ -236,19 +236,19 @@ import ReactDOM from 'react-dom'
 
 // render h1 element on root div
 ReactDOM.render(
--  <h1>Hello from React</h1>, 
+-  <h1>Hello from React</h1>,
 +  <App />,
   document.getElementById('root')
 )
 ```
 
-> NOTE: when you see a '+' sign that means add that 
-line, when you see '-' sign that means delete that 
+> NOTE: when you see a '+' sign that means add that
+line, when you see '-' sign that means delete that
 line. When typing do not include the + or -.
 
 ---
 
-# Recap 
+# Recap
 
 Your app.js file should look like this
 
@@ -275,7 +275,7 @@ import ReactDOM from 'react-dom'
 import App from './app'
 
 ReactDOM.render(
-  <App />, 
+  <App />,
   document.getElementById('root')
 )
 ```
@@ -321,7 +321,7 @@ classname-value-screensize
 import React from 'react'
 
 class App extends React.Component {
-  
+
   render() {
     return (
       <div>
@@ -337,7 +337,7 @@ class App extends React.Component {
 export default App
 ```
 
-> You may notice that we are using the className property instead of the class attribute. React does not support the class attribute because, it will conflict 
+> You may notice that we are using the className property instead of the class attribute. React does not support the class attribute because, it will conflict
 with the javascript keyword class.
 
 https://facebook.github.io/react/docs/dom-elements.html#classname
@@ -346,7 +346,7 @@ https://facebook.github.io/react/docs/dom-elements.html#classname
 
 ## JSX
 
-You may have noticed we are writing a kind of xml or html like syntax. This is 
+You may have noticed we are writing a kind of xml or html like syntax. This is
 `jsx` - jsx is another way to invoke a function.
 
 https://facebook.github.io/jsx/
@@ -359,7 +359,7 @@ return (
 )
 ```
 
-Gets converted to 
+Gets converted to
 
 ```js
 return React.createElement(
@@ -381,7 +381,7 @@ return React.createElement(
 import React from 'react'
 
 class App extends React.Component {
-  
+
   render() {
     return (
       <div className="margin-none padding-none">
@@ -423,7 +423,7 @@ import React from 'react'
 +  import Button from './components/button'
 
 class App extends React.Component {
-  
+
   render() {
     return (
       <div className="margin-none padding-none">
@@ -447,7 +447,7 @@ export default App
 
 ```
 
-> This is going to break your app, but you may notice in the console, 
+> This is going to break your app, but you may notice in the console,
 that you have an error.
 
 > Uncaught (in promise) Error: Button is not defined
@@ -463,10 +463,10 @@ const { compose, join, map, trim, split } = R
 const cls = compose(join(' '), map(trim), split('\n'))
 
 const styles = cls(`
-  f5 
-  backgroundcolor-purple 
-  white 
-  borderradius-2 
+  f5
+  backgroundcolor-purple
+  white
+  borderradius-2
   paddinghorizontal-small
   paddingvertical-xsmall
   bordercolor-purple
@@ -516,7 +516,7 @@ const Home = () => {
 export default Home
 ```
 
-And another file called 
+And another file called
 
 `src/pages/form.js`
 
@@ -548,7 +548,7 @@ import Button from './components/button'
 +  const { BrowserRouter, Route } = ReactRouter
 
 class App extends React.Component {
-  
+
   render() {
     return (
 +        <BrowserRouter>
@@ -604,4 +604,3 @@ export default Home
 ```
 
 ---
-

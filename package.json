@@ -8,12 +8,17 @@
   "main": "server.js",
   "scripts": {
     "//start": "xslide README.md -p 3000",
-    "start": "node server.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "lint": "eslint src/"
   },
   "dependencies": {
     "express": "^4.15.3",
-    "ramda": "^0.24.1",
     "json-server": "^0.10.1",
+    "ramda": "^0.24.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.1",
     "xslide": "^1.1.0"
   },
   "engines": {
@@ -27,5 +32,16 @@
     "node",
     "glitch",
     "express"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^4.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-funfp": "^1.0.6",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "react-scripts": "^1.0.7"
+  }
 }

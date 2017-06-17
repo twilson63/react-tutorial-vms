@@ -1,17 +1,18 @@
 import React from 'react'
-// import Button from '..//components/button'
-
-//     <Button>Add Video</Button>
-
+import Button from '../components/button'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
     <div className="padding-medium">
-     <h2>Videos</h2>
-     <ul>
-       <li>Video 1</li>
-       <li>Video 2</li>
-     </ul>
+      <Link to="/videos/new">
+        <Button>Add Video</Button>
+      </Link>
+      <h2>Videos</h2>
+      <ul>
+        <li>Video 1</li>
+        <li>Video 2</li>
+      </ul>
     </div>
   )
 }
