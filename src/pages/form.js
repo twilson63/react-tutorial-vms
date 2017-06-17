@@ -6,8 +6,13 @@ const Form = () => {
   return (
     <div className="padding-medium">
       <h2>Video Form</h2>
-      <form>
+      <form className="measure">
         <TextField label="Name" description="Enter short name of video" />
+        <TextField label="Description" description="Describe your video" />
+        <TextField
+          label="Categories"
+          description="Enter comma separated list of categories"
+        />
         <div>
           <Button>Submit</Button>
         </div>
