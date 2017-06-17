@@ -458,24 +458,15 @@ that you have an error.
 
 ```js
 import React from 'react'
-import R from 'ramda'
-const { compose, join, map, trim, split } = R
-const cls = compose(join(' '), map(trim), split('\n'))
 
-const styles = cls(`
-  f5
-  backgroundcolor-purple
-  white
-  borderradius-2
-  paddinghorizontal-small
-  paddingvertical-xsmall
-  bordercolor-purple
-`)
+// f6 link dim br2 ph3 pv2 mb2 dib white bg-purple
+const styles =
+  'f5 backgroundcolor-purple white borderradius-2 paddinghorizontal-small paddingvertical-xsmall bordercolor-purple'
 
 const Button = props => {
   return (
     <div className="float-right">
-    <button className={styles}>{props.children}</button>
+      <button className={styles}>{props.children}</button>
     </div>
   )
 }
@@ -600,6 +591,666 @@ const Home = () => {
 }
 
 export default Home
+
+```
+
+---
+
+# Checkpoint
+
+* [X] Created our first component
+* [X] Add Tachyons CSS
+* [X] Created a button component
+* [X] Consumed a button component
+* [X] Imported React Router
+* [X] Added a Home Page Component
+* [X] Added a Form Page Component
+* [X] Created two routes
+
+![img](http://www.fillmurray.com/300/300)
+
+---
+
+# Next
+
+* [ ] More Setup (React Scripts, JSON Server)
+* [ ] Create a Form
+* [ ] Create a TextField Component
+* [ ] Create a Controlled Component
+* [ ] Create a TextArea Component
+* [ ] Add Redux
+* [ ] Add Redux Thunk and Fetch
+
+![img](http://www.fillmurray.com/300/200)
+
+---
+
+# Setup Part 2
+
+```sh
+npm i react-scripts foreman json-server -D
+mkdir .data
+echo '{"videos":[] }' > .data/db.json
+touch Procfile
+```
+
+## Edit package.json scripts section
+
+```json
+"scripts": {
+  "start": "nf start",
+  "api": "json-server .data/db.json -p 4000",
+  "web": "PORT=3000 react-scripts start",
+  "build": "react-scripts build",
+},
+```
+
+## Modify your Procfile
+
+```
+web: npm run web
+api: npm run api
+```
+
+> theres more
+
+---
+
+# Setup 2 (cont)
+
+## replace your index.html
+
+```html
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Training Video Manager</title>
+      <link rel="stylesheet" href="https://cdn.rawgit.com/tachyons-css/tachyons-verbose/f5189854/css/tachyons.css" />
+  </head>
+  <body class="margin-none padding-none">
+    <div class="margin-none padding-none" id="root"></div>
+  </body>
+</html>
+```
+
+`npm start`
+
+At this point your app should be running on port 3000 and your api should be running on port 4000
+
+---
+
+> NOTE: address minor clean up
+
+This setup gives us some better error handling
+and auto reloading support.
+
+Now we can setup our browser and editor on the same
+screen and when changes happen, we see them reflected
+in the browser. When an error occurs we see that too.  
+
+## Cool Beans
+
+![img](http://www.fillmurray.com/200/300)
+
+---
+
+# Linking our Add Button to the form.
+
+In our home page, we want to import the `Link` component from `react-router-dom` and wrap our Button
+with the Link component.
+
+```
+<Link to="/videos/new">
+  <Button>Add Video</Button>
+</Link>
+```
+
+This will tell the app, when the button is clicked to navigate to the /videos/new route
+
+---
+
+## Here is a diff of the Home page component
+
+```js
+import React from 'react'
++import Button from '../components/button'
++import { Link } from 'react-router-dom'
+
+const Home = () => {
+  return (
+    <div className="padding-medium">
+-     <h2>Videos</h2>
+-     <ul>
+-       <li>Video 1</li>
+-       <li>Video 2</li>
+-     </ul>
++      <Link to="/videos/new">
++        <Button>Add Video</Button>
++      </Link>
++      <h2>Videos</h2>
++      <ul>
++        <li>Video 1</li>
++        <li>Video 2</li>
++      </ul>
+    </div>
+  )
+}
+
+-export default Home
++export default Home
+```
+
+> https://github.com/twilson63/react-tutorial-vms/commit/8f61f8a5eaefc87c9c1305e5ed2c84a604b69652#diff-efde4abac1d469216f43ba92d40a18b0
+
+---
+
+## Building a Form
+
+```
+import React from 'react'
++import Button from '../components/button'
+
+const Form = () => {
+  return (
+-    <div>
+-      Form
++    <div className="padding-medium">
++      <h2>Video Form</h2>
++      <form>
++        <div className="measure">
++          <label className="f6 fontweight-bold display-block marginbottom-xxsmall">
++            Name
++          </label>
++          <input
++            className="input-reset border bordercolor-black20 padding-xxsmall marginbottom-xxsmall"
++            type="text"
++          />
++          <small className="f6 black60 display-block marginbottom-xxsmall">
++            Enter short description of video
++          </small>
++        </div>
++        <div>
++          <Button>Submit</Button>
++        </div>
++      </form>
+    </div>
+  )
+}
+```
+
+---
+
+## Lets create a TextField Component
+
+> src/components/text-field.js
+
+```js
++import React from 'react'
++
++const TextField = props => {
++  return (
++    <div className="measure">
++      <label className="f6 fontweight-bold display-block marginbottom-xxsmall">
++        {props.label}
++      </label>
++      <input
++        className="input-reset display-block width-100p border bordercolor-black20 padding-xxsmall marginbottom-xxsmall"
++        type="text"
++      />
++      <small className="f6 black60 display-block marginbottom-xxsmall">
++        ({props.description})
++      </small>
++    </div>
++  )
++}
++
++export default TextField
+View  
+```
+
+---
+
+# Add TextField Component to Form
+
+> src/pages/form.js
+
+```js
+import React from 'react'
+import Button from '../components/button'
++import TextField from '../components/text-field'
+
+const Form = () => {
+ return (
+   <div className="padding-medium">
+     <h2>Video Form</h2>
+     <form>
+-        <div className="measure">
+-          <label className="f6 fontweight-bold display-block marginbottom-xxsmall">
+-            Name
+-          </label>
+-          <input
+-            className="input-reset border bordercolor-black20 padding-xxsmall marginbottom-xxsmall"
+-            type="text"
+-          />
+-          <small className="f6 black60 display-block marginbottom-xxsmall">
+-            Enter short description of video
+-          </small>
+-        </div>
++        <TextField label="Name" description="Enter short name of video" />
+       <div>
+         <Button>Submit</Button>
+       </div>
+    </form>
+  </div>
+)
+}
+
+export default Form
+```
+
+---
+
+# Add more text fields
+
+```js
+return (
+  <div className="padding-medium">
+    <h2>Video Form</h2>
+-      <form>
++      <form className="measure">
+      <TextField label="Name" description="Enter short name of video" />
++        <TextField label="Description" description="Describe your video" />
++        <TextField
++          label="Categories"
++          description="Enter comma separated list of categories"
++        />
+      <div>
+        <Button>Submit</Button>
+      </div>
+```
+
+---
+
+# Create TextArea Component
+
+> src/components/text-area.js
+
+```js
++import React from 'react'
+ +
+ +const TextField = props => {
+ +  return (
+ +    <div className="measure">
+ +      <label className="f6 fontweight-bold display-block marginbottom-xxsmall">
+ +        {props.label}
+ +      </label>
+ +      <textarea
+ +        className="input-reset display-block width-100p border bordercolor-black20 padding-xxsmall marginbottom-xxsmall"
+ +        type="text"
+ +      />
+ +      <small className="f6 black60 display-block marginbottom-xxsmall">
+ +        ({props.description})
+ +      </small>
+ +    </div>
+ +  )
+ +}
+ +
+ +export default TextField
+```
+
+---
+
+# Add Component to Form.js
+
+```js
+import React from 'react'
+import Button from '../components/button'
+import TextField from '../components/text-field'
++import TextArea from '../components/text-area'
+
+const Form = () => {
+  return (
+    <div className="padding-medium">
+      <h2>Video Form</h2>
+      <form className="measure">
+        <TextField label="Name" description="Enter short name of video" />
+-        <TextField label="Description" description="Describe your video" />
++        <TextArea label="Description" description="Describe your video" />
+        <TextField
+          label="Categories"
+          description="Enter comma separated list of categories"
+
+```
+
+---
+
+# Convert TextField and TextArea into controlled components.
+
+## What is a controlled component
+
+A controlled component is a component that reads its
+value from the value property and handles the
+onChange event to write the property out to state.
+
+So basically every time the value is changed in state
+it is applied to the component and every time the
+value is changed in the dom it is applied to state.
+
+> TODO: Create Dogbyte on Controlled Component
+
+---
+
+## Turn TextField into a controlled component
+
+> src/components/text-field.js
+
+```js
+<input
+   className="input-reset display-block width-100p border bordercolor-black20 padding-xxsmall marginbottom-xxsmall"
+   type="text"
++        value={props.value}
++        onChange={e => props.onChange(e.target.value)}
+ />
+ <small className="f6 black60 display-block marginbottom-xxsmall">
+   ({props.description})
+```
+
+---
+
+# Setup State Management
+
+> NOTE: Provide Redux Overview
+
+* First we need to install redux
+* Create a Redux Store
+* Using a Provider Component Attach our Store to the App
+* Using the connect function to add our redux state into the form
+
+---
+
+# Installing Redux
+
+```sh
+npm install redux react-redux redux-thunk -S
+```
+
+![img](http://www.fillmurray.com/400/400)
+
+---
+
+# Creating a Redux Store
+
+> src/store.js
+
+```js
+import { createStore } from 'redux'
+
+const rootReducer = function (state, action) {
+  return state
+}
+
+const store = createStore()
+
+export default store
+
+```
+
+---
+
+# Add Store to App using Provider Component
+
+> src/index.js
+
+```js
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './app'
++import { Provider } from 'react-redux'
++import store from './store'
+
+const root = document.getElementById('root')
+const render = ReactDOM.render
+
+// eslint-disable-next-line fp/no-unused-expression
+-render(<App />, root)
++render(<Provider store={store}><App /></Provider>, root)
+View  
+```
+
+---
+
+## Lets connect our Form component to our Store
+
+> src/pages/form.js
+
+```js
++import { connect } from 'react-redux'
+
+-const Form = () => {
++const Form = props => {
+  return (
+    <div className="padding-medium">
+      <h2>Video Form</h2>
+      <form className="measure">
+-        <TextField label="Name" description="Enter short name of video" />
++        <TextField
++          label="Name"
++          description="Enter short name of video"
++          value={props.video.name}
++          onChange={name =>
++            props.dispatch({ type: 'SET_VIDEO_NAME', payload: name })}
++        />
+        <TextArea label="Description" description="Describe your video" />
+        <TextField
+          label="Categories"
+         description="Enter comma separated list of categories"
+       />
+       <div>
+         <Button>Submit</Button>
+       </div>
+     </form>
+   </div>
+  )
+}
+
+-export default Form
++const connector = connect(state => state)
++
++export default connector(Form)
+```
+
+---
+
+# Configure our reducer
+
+> src/store.js
+
+```js
++import { createStore, combineReducers } from 'redux'
+ +import { merge } from 'ramda'
+ +
+ +const store = createStore(
+ +  combineReducers({
+ +    video: (state = { name: '' }, action) => {
+ +      switch (action.type) {
+ +        case 'SET_VIDEO_NAME':
+ +          return merge(state, { name: action.payload })
+ +        default:
+ +          return state
+ +      }
+ +    }
+ +  })
+ +)
+ +
+ +export default store
+```
+
+---
+
+# Success!
+
+At this point when we type into our controlled
+component it should show in our state.
+
+## Lets look at it using React DevTools
+
+https://github.com/facebook/react-devtools
+
+---
+
+# React Dev Tools
+
+React Dev Tool allow you to inspect your state for
+any given component.
+
+[DEMO]
+
+---
+
+# Handle saving the video document
+
+* Submit is clicked
+* POST a JSON Document to our api server
+* If ok then redirect to home
+* Otherwise show error
+
+---
+
+# Adding middleware to redux
+
+> src/store.js
+
+```js
+-import { createStore, combineReducers } from 'redux'
++import { createStore, combineReducers, applyMiddleware } from 'redux'
++import thunk from 'redux-thunk'
+import { merge } from 'ramda'
+
+const store = createStore(
+@@ -11,7 +12,8 @@ const store = createStore(
+          return state
+      }
+    }
+-  })
++  }),
++  applyMiddleware(thunk)
+)
+
+export default store
+```
+
+---
+
+# Use React Router to redirect to Home Page
+
+> src/pages/form.js
+
+ReactRouter adds a couple of props to our component:
+
+* history
+* match
+* location
+
+We can use the history.push method to redirect to
+another location.
+
+```
+props.history.push('/')
+```
+
+---
+
+# Add isomorphic-fetch
+
+fetch is a way to get and send data to our api server.
+
+```
+fetch(url).then(res => ...)
+```
+
+---
+
+# Add ActionCreator to
+
+> src/pages/form.js
+
+```js
+import TextField from '../components/text-field'
+import TextArea from '../components/text-area'
+import { connect } from 'react-redux'
++import fetch from 'isomorphic-fetch'
+
+const Form = props => {
+  return (
+    <div className="padding-medium">
+      <h2>Video Form</h2>
+-      <form className="measure">
++      <form
++        className="measure"
++        onSubmit={e => {
++          e.preventDefault()
++          props.save(props.video, props.history)
++        }}
++      >
+        <TextField
+          label="Name"
+          description="Enter short name of video"
+          value={props.video.name}
+-          onChange={name =>
+-            props.dispatch({ type: 'SET_VIDEO_NAME', payload: name })}
++          onChange={props.setName}
+        />
+        <TextArea label="Description" description="Describe your video" />
+        <TextField
+@@ -29,6 +35,30 @@ const Form = props => {
+  )
+}
+
+-const connector = connect(state => state)
++const save = video => {
++  return fetch('http://localhost:4000/videos', {
++    method: 'POST',
++    headers: new Headers({
++      'Content-Type': 'application/json'
++    }),
++    body: JSON.stringify(video)
++  }).then(res => res.json())
++}
++
++const connector = connect(state => state, {
++  save: (video, history) => {
++    return dispatch => {
++      dispatch({ type: 'SUBMITTING' })
++      return save(video)
++        .then(res => {
++          history.push('/')
++        })
++        .then(res => ({ type: 'FINISHED' }))
++    }
++  },
++  setName: text => {
++    return { type: 'SET_VIDEO_NAME', payload: text }
++  }
++})
+
+export default connector(Form)
+```
+
+---
+
+# Lets list all of our videos on our home page.
+
+* We need to fetch the list from the server
+* We need to add the list to our state
+* We need to paint the list from our state 
+
+---
+
+
+# Turn TextArea into controlled component
+
+```js
 
 ```
 
