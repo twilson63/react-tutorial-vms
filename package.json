@@ -8,7 +8,9 @@
   "main": "server.js",
   "scripts": {
     "//start": "xslide README.md -p 3000",
-    "start": "react-scripts start",
+    "start": "nf start",
+    "api": "json-server .data/db.json -p 4000",
+    "web": "PORT=3000 react-scripts start",
     "build": "react-scripts build",
     "lint": "eslint src/"
   },
@@ -21,6 +23,7 @@
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.0",
+    "redux-thunk": "^2.2.0",
     "xslide": "^1.1.0"
   },
   "engines": {
@@ -44,6 +47,7 @@
     "eslint-plugin-node": "^5.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "foreman": "^2.0.0",
     "react-scripts": "^1.0.7"
   }
 }
