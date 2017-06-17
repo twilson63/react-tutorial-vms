@@ -9,6 +9,8 @@ const TextField = props => {
       <input
         className="input-reset display-block width-100p border bordercolor-black20 padding-xxsmall marginbottom-xxsmall"
         type="text"
+        value={props.value}
+        onChange={e => props.onChange(e.target.value)}
       />
       <small className="f6 black60 display-block marginbottom-xxsmall">
         ({props.description})
