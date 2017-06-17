@@ -1243,15 +1243,106 @@ export default connector(Form)
 
 * We need to fetch the list from the server
 * We need to add the list to our state
-* We need to paint the list from our state 
+* We need to paint the list from our state
 
 ---
 
-
-# Turn TextArea into controlled component
+# get videos
 
 ```js
+import React from 'react'
+import Button from '../components/button'
+import { Link } from 'react-router-dom'
++import { connect } from 'react-redux'
++import fetch from 'isomorphic-fetch'
++import { map } from 'ramda'
 
+-const Home = () => {
+-  return (
+-    <div className="padding-medium">
+-      <Link to="/videos/new">
+-        <Button>Add Video</Button>
+-      </Link>
+-      <h2>Videos</h2>
+-      <ul>
+-        <li>Video 1</li>
+-        <li>Video 2</li>
+-      </ul>
+-    </div>
+-  )
++class Home extends React.Component {
++  componentDidMount () {
++    const props = this.props
++    fetch('http://localhost:4000/videos')
++      .then(res => res.json())
++      .then(videos => {
++        props.dispatch({ type: 'SET_VIDEOS', payload: videos })
++      })
++  }
++  render () {
++    const li = function (video) {
++      return <li key={video.id}>{video.name}</li>
++    }
++    const props = this.props
++    return (
++      <div className="padding-medium">
++        <Link to="/videos/new">
++          <Button>Add Video</Button>
++        </Link>
++        <h2>Videos</h2>
++        <ul>
++          {map(li, props.videos)}
++        </ul>
++      </div>
++    )
++  }
+}
+
+-export default Home
++const connector = connect(state => state)
++
++export default connector(Home)
 ```
 
 ---
+
+# update store
+
+> src/store.js
+
+```js
+const store = createStore(
+  combineReducers({
++    videos: (state = [], action) => {
++      switch (action.type) {
++        case 'SET_VIDEOS':
++          return action.payload
++        default:
++          return state
++      }
++    },
+    video: (state = { name: '' }, action) => {
+      switch (action.type) {
+        case 'SET_VIDEO_NAME':
+          return merge(state, { name: action.payload })
++
+        default:
+          return state
+      }
+```
+
+---
+
+# Exercises
+
+* Turn TextArea into a controlled component
+* Include Description and Category in document
+* Add action handlers for description and category
+* filter video list by category
+* show count of videos
+* show description of videos in list
+* create a link input for video src for each video
+* create a video search box
+* create a show component
+* create a edit video workflow
+* create a remove video workflow
