@@ -52,7 +52,7 @@ npm install json -g
 json -I -f package.json -e 'this.scripts.start = "node server.js"'
 mkdir .data
 touch .data/db.json
-json -I -f .data/db.json -e 'this = { "videos": [] }'
+json -I -f .data/db.json -e 'this.videos: []'
 touch server.js
 mkdir public src
 touch public/index.html src/index.js
