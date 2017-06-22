@@ -1335,14 +1335,85 @@ const store = createStore(
 
 # Exercises
 
-* Turn TextArea into a controlled component
-* Include Description and Category in document
-* Add action handlers for description and category
-* filter video list by category
-* show count of videos
-* show description of videos in list
-* create a link input for video src for each video
-* create a video search box
-* create a show component
-* create a edit video workflow
-* create a remove video workflow
+1. Turn Description TextArea into a controlled component
+2. Turn Categories into a controlled component from text of comma delimited items to an array of items and store in db.json
+3. Create a new model in your db.json api called categories and add new categories to your master list when you add a video document.
+4. filter video list by category
+5. show count of videos
+6. show description of videos in list
+7. create a link input for video src for each video
+
+---
+
+### Exercises (cont)
+
+8. create a video search box
+9. create a show component
+10. create a edit video workflow
+11. create a remove video workflow
+
+---
+
+### Exercise 1
+
+1. Turn Description TextArea into a controlled component
+
+In this exercise you want to convert the description field into a controlled component and store the data into the db.json via the api, and have it flow to the store via redux's dispatch function.
+
+> HINT 1 a controlled component must implement the `value and onChange` properties
+
+> HINT 2 Read: https://facebook.github.io/react/docs/forms.html
+
+Validation: When you add new video documents, you should now have a name and description field stored in your db.json
+
+---
+
+### Exercise 2
+
+2. Turn Categories into a controlled component from text of comma delimited items to an array of items and store in db.json
+
+> HINT 1 a controlled component must implement the `value and onChange` properties
+
+> HINT 2 Read: https://facebook.github.io/react/docs/forms.html
+
+Validation: When you add new video documents, you should now have a name, description, category field stored in your db.json, 
+the categories node should be an array of strings, eg. ['code', 'game', 'redux']
+So you will need to convert 'code, game, redux' to an array, in your ActionCreator, before you store it in the api.
+
+---
+
+### Exercise 3
+
+3. Create a new model in your db.json api called categories and add new categories to your master list when you add a video document.
+
+You can add a new model to your db.json, by editing the file and adding a new node in your root object of the json file.
+
+```
+{
+  "videos": []
+}
+```
+
+to
+
+```
+{
+  "video": [],
+  "categories": []
+}
+```
+On componentDidMount you want to use fetch to get the master list of categories, and set them to your redux store.
+
+Then in your handleSubmit get add the categories from your master list and compare to the categories for this document, take a difference between the two and then POST the new ones to your categories endpoint.
+
+---
+
+### Exercise 4
+
+4. filter video list by category
+
+on the list videos component show the list of categories to the left or right of the videos, you should pull the category list from redux and paint them using a map function. Use the button or anchor link to capture an onClick event. Using redux ActionCreators to handleCategoryClick and in that function console log all of the documents that contain a category based on the category clicked.
+
+
+redux 
+
