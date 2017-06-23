@@ -1181,36 +1181,43 @@ fetch(url).then(res => ...)
 > src/pages/form.js
 
 ```js
+import React from 'react'
+import Button from '../components/button'
 import TextField from '../components/text-field'
 import TextArea from '../components/text-area'
-import { connect } from 'react-redux'
-+import fetch from 'isomorphic-fetch'
++import { connect } from 'react-redux'
 
-const Form = props => {
+-const Form = () => {
++const Form = props => {
   return (
     <div className="padding-medium">
       <h2>Video Form</h2>
--      <form className="measure">
-+      <form
-+        className="measure"
-+        onSubmit={e => {
-+          e.preventDefault()
-+          props.save(props.video, props.history)
-+        }}
-+      >
-        <TextField
-          label="Name"
-          description="Enter short name of video"
-          value={props.video.name}
--          onChange={name =>
--            props.dispatch({ type: 'SET_VIDEO_NAME', payload: name })}
-+          onChange={props.setName}
-        />
+      <form className="measure">
+-        <TextField label="Name" description="Enter short name of video" />
++        <TextField
++          label="Name"
++          description="Enter short name of video"
++          value={props.video.name}
++          onChange={name =>
++            props.dispatch({ type: 'SET_VIDEO_NAME', payload: name })}
++        />
         <TextArea label="Description" description="Describe your video" />
         <TextField
-@@ -29,6 +35,30 @@ const Form = props => {
+          label="Categories"
+         description="Enter comma separated list of categories"
+       />
+       <div>
+         <Button>Submit</Button>
+       </div>
+     </form>
+   </div>
   )
 }
+
+-export default Form
++const connector = connect(state => state)
++
++export default connector(Form)
 
 -const connector = connect(state => state)
 +const save = video => {
