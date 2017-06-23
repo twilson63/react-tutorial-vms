@@ -1128,7 +1128,12 @@ any given component.
 import { merge } from 'ramda'
 
 const store = createStore(
-@@ -11,7 +12,8 @@ const store = createStore(
+ combineReducers({
+   video: (state = { name: '' }, action) => {
+     switch (action.type) {
+       case 'SET_VIDEO_NAME':
+         return merge(state, { name: action.payload })
+       default:
           return state
       }
     }
