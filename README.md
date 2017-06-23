@@ -879,7 +879,7 @@ return (
 ```js
 +import React from 'react'
  +
- +const TextField = props => {
+ +const TextArea = props => {
  +  return (
  +    <div className="measure">
  +      <label className="f6 fontweight-bold display-block marginbottom-xxsmall">
@@ -896,7 +896,7 @@ return (
  +  )
  +}
  +
- +export default TextField
+ +export default TextArea
 ```
 
 ---
