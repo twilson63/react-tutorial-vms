@@ -640,7 +640,7 @@ touch Procfile
 "scripts": {
   "start": "nf start",
   "api": "json-server .data/db.json -p 4000",
-  "web": "PORT=3000 react-scripts start",
+  "web": "react-scripts start",
   "build": "react-scripts build",
 },
 ```
