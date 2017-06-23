@@ -1149,7 +1149,7 @@ export default store
 
 # Use React Router to redirect to Home Page
 
-> src/pages/form.js
+> Review React Router - https://reacttraining.com/react-router/web/api/history
 
 ReactRouter adds a couple of props to our component:
 
@@ -1164,21 +1164,31 @@ another location.
 props.history.push('/')
 ```
 
+Look in a couple of sections below (ActionCreator) to see how history.push is being used to redirect to the home page.
+
+
 ---
 
 # Add isomorphic-fetch
 
 fetch is a way to get and send data to our api server.
 
+> Review - https://glitch.com/~dogbytes-fetch
+> And - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
 ```
 fetch(url).then(res => ...)
 ```
+
+See the next section to see how fetch is being used in an Action Creator to send a Video Document to the api server.
 
 ---
 
 # Add ActionCreator to
 
 > src/pages/form.js
+
+Creating an ActionReducer to save the video, we leverage the history and fetch functionalities to send the document to the api and redirect to the Home folder when complete
 
 ```js
 import React from 'react'
