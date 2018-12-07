@@ -94,7 +94,7 @@ Create index.html
 <html>
   <head>
     <title>My Tutorial Videos</title>
-    <link rel="stylesheet" href="https://cdn.rawgit.com/tachyons-css/tachyons-verbose/f5189854/css/tachyons.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tachyons-css/tachyons-verbose@f5189854/css/tachyons.css" />
     <script src="https://unpkg.com/getlibs"></script>
   </head>
   <body class="margin-none padding-none">
@@ -666,7 +666,7 @@ api: npm run api
   <head>
       <meta charset="utf-8">
       <title>Training Video Manager</title>
-      <link rel="stylesheet" href="https://cdn.rawgit.com/tachyons-css/tachyons-verbose/f5189854/css/tachyons.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tachyons-css/tachyons-verbose@f5189854/css/tachyons.css" />
   </head>
   <body class="margin-none padding-none">
     <div class="margin-none padding-none" id="root"></div>
